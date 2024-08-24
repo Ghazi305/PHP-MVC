@@ -43,11 +43,11 @@ abstract class Model
     return app()->db->read($columns, $filter);
   }
   
-  public static function limite($count)
+  public static function limit($count)
   {
     self::$instance = static::class;
     
-    return app()->db->limite($count);
+    return app()->db->limit($count);
   }
   
   public static function count($columns = ['*'])

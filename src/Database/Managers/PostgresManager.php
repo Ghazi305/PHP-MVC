@@ -104,13 +104,13 @@ class PostgresManager implements DatabaseManager
      return $stm->execute();
   }
   
-  public function limite(int $count)
+  public function limit(int $count)
   {
     if (self::$instance === null) {
       self::$instance = $this->connect();
      }
      
-     $query = PostegrsGrammar::buildLimiteQuery();
+     $query = PostegrsGrammar::buildlimitQuery();
      $stm = self::$instance->prepare($query);
      
      $stm->bindValue(1,$count);

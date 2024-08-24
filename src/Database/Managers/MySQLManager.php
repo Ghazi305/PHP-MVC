@@ -110,13 +110,13 @@ class MySQLManager implements DatabaseManager
     return $stm->execute();
   }
   
-  public function limite($count)
+  public function limit($count)
   {
     if (self::$instance === null) {
       self::$instance = $this->connect();
      }
      
-     $query = MySQLGrammar::buildLimiteQuery();
+     $query = MySQLGrammar::buildlimitQuery();
      $stm = self::$instance->prepare($query);
      
      $stm->bindValue(1,$count);

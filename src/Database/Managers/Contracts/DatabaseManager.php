@@ -18,7 +18,7 @@ interface DatabaseManager
     
     public function delete($id);
     
-    public function limite($count);
+    public function limit($count);
     
     public function count($columns);
 }

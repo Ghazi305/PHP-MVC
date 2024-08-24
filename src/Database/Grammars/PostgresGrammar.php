@@ -52,7 +52,7 @@ class PostgresGrammar
     return "DELETE FROM " . Model::getTableName() . ' WHERE ID = ?';
   }
   
-  public static function buildLimiteQuery()
+  public static function buildlimitQuery()
     {
       return "SELECT * FROM " . Model::getTableName() . ' LIMIT ? ';
     }

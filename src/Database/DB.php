@@ -45,9 +45,9 @@ class DB
     return $this->manager->delete($id);
   }
   
-  protected function limite(int $count)
+  protected function limit(int $count)
   {
-    return $this->manager->limite($count);
+    return $this->manager->limit($count);
   }
   
   protected function count($columns = ['*'])
