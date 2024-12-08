@@ -6,65 +6,51 @@ use App\Models\Model;
 
 class SQLiteGrammar
 {
-    public static function buildSelectQuery($columns = '*',$filter = null)
+    public static function buildSelectQuery($columns = '*', $filter = null)
     {
-      if (is_array($columns)) {
-      $columns = implode(', ', $columns);
-    }
+        if (is_array($columns)) {
+            $columns = implode(', ', $columns);
+        }
 
-    $query = "SELECT {$columns} FROM " . Model::getTableName();
+        $query = "SELECT {$columns} FROM " . Model::getTableName();
 
-    if ($filter) {
-      $query .= " WHERE {$filter[0]} {$filter[1]} ?";
-    }
+        if ($filter) {
+            $query .= " WHERE {$filter[0]} {$filter[1]} ?";
+        }
 
-    return $query;
+        return $query;
     }
 
     public static function buildInsertQuery($keys)
     {
-      $values = '';
-    for ($i = 1; $i <= count($keys); $i++) { 
-      $values .= '?';
-      if ($i < count($keys)) {
-        $values .= ', ';
-      }
-    }
+        $values = implode(', ', array_fill(0, count($keys), '?'));
 
-    $query = "INSERT INTO " . Model::getTableName() . ' (`' . implode('`, `',$keys) . '`) VALUES(' . rtrim($values, ', ' ) . ')';
-    return $query;
-    
+        $query = "INSERT INTO " . Model::getTableName() . 
+                 " (`" . implode('`, `', $keys) . "`) VALUES ({$values})";
+        return $query;
     }
 
     public static function buildUpdateQuery($keys)
     {
-      $query = "UPDATE " . Model::getTableName() . ' SET ';
+        $setClause = implode(', ', array_map(fn($key) => "{$key} = ?", $keys));
 
-    foreach ($keys as $key) {
-      $query .= "{$key} = ?, "; 
-    }
-
-    $query = rtrim($query, ', ') . ' WHERE ID = ?';
-    return $query;
+        $query = "UPDATE " . Model::getTableName() . 
+                 " SET {$setClause} WHERE ID = ?";
+        return $query;
     }
 
     public static function buildDeleteQuery()
     {
-      return "DELETE FROM " . Model::getTableName() . ' WHERE ID = ?'; 
+        return "DELETE FROM " . Model::getTableName() . " WHERE ID = ?"; 
     }
     
-    public static function buildlimitQuery()
+    public static function buildLimitQuery()
     {
-      return "SELECT * FROM " . Model::getTableName() . ' LIMIT ? ';
+        return "SELECT * FROM " . Model::getTableName() . " LIMIT ?";
     }
     
-    public static function buildCountQuery($columns = ['*'])
+    public static function buildCountQuery()
     {
-      if (is_array($columns)) {
-      $columns = implode(', ', $columns);
-    }
-      $query = "SELECT COUNT({$columns}) FROM " . Model::getTableName();
-      
-      return $query;
+        return "SELECT COUNT(*) FROM " . Model::getTableName();
     }
 }

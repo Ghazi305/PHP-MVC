@@ -21,6 +21,8 @@ interface DatabaseManager
     public function limit($count);
     
     public function count($columns);
+    
+    /*public function with($relations, $columns = '*', $filter = null);
+    
+    public function countWithRelations($relations, $filter = null);*/
 }
-
-

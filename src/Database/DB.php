@@ -55,6 +55,11 @@ class DB
     return $this->manager->count($columns);
   }
   
+  public function with($relations, $columns = '*', $filter = null)
+  {
+    return $this->manager->with($relations, $columns, $filter);
+  }
+  
   public function __call($name, $arguments)
   {
     if(method_exists($this, $name)) {

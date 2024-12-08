@@ -6,34 +6,47 @@ use Proton\Support\Arr;
 
 class Request 
 {
-  public function method()
-  {
-    return strtolower($_SERVER['REQUEST_METHOD']);
-  }
-  
-  public function path()
-  {
-    $path = $_SERVER['REQUEST_URI'] ?? '/';
-    $position = strpos($path, '?');
-    if ($position === false) {
-      return $path;
+    /**
+     * Get the order method(GET, POST, PUT, DELETE).
+     */
+    public function method(): string
+    {
+        return strtolower($_SERVER['REQUEST_METHOD']);
     }
     
-    return substr($path, 0,$position);
-  }
+    /**
+     */
+    public function path(): string
+    {
+        $path = $_SERVER['REQUEST_URI'] ?? '/';
+        $position = strpos($path, '?');
+        
+        return $position === false ? $path : substr($path, 0, $position);
+    }
 
-  public function all()
-  {
-    return $_REQUEST;
-  }
+    /**
+     * return key request ( GET, POST, COOKIE).
+     */
+    public function all(): array
+    {
+        return $_REQUEST;
+    }
 
-  public function only($keys)
-  {
-    return Arr::only($this->all(),$keys);
-  }
+    /**
+     * @param array|string $keys .
+     * @return array
+     */
+    public function only($keys): array
+    {
+        return Arr::only($this->all(), (array)$keys);
+    }
 
-  public function get($key)
-  {
-    return Arr::get($this->all(),$key);
-  }
+    /**
+     * @param string $key.
+     * @return mixed
+     */
+    public function get(string $key)
+    {
+        return Arr::get($this->all(), $key);
+    }
 }

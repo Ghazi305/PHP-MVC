@@ -1,12 +1,12 @@
-{
-    "name": "u0_a276/mvc",
-    "description": "php mvc project",
+{ 
+    "name": "proton/framework",
+    "description": "php Proton-Framework", 
     "type": "project",
     "autoload": {
         "psr-4": {
-            "App\\":"App",
+            "App\\":"app",
             "Proton\\": "src"
-        }
+        } 
     },
     "require": {
         "vlucas/phpdotenv": "^5.6",

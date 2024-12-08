@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class Studan extends Model 
+class Semester extends Model
 {
-  
+    //
 }
