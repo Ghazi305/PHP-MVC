@@ -12,17 +12,17 @@ class MySQLManager implements DatabaseManager
 
     public function connect(): \PDO
     {
-        try {
-            if (!self::$instance) {
-                self::$instance = new \PDO(
-                    env('DB_DRIVER') . ':host=' . env('DB_HOST') . ';dbname=' . env('DB_DATABASE'),
+       try {
+          if (!self::$instance) {
+              self::$instance = new \PDO(
+                  env('DB_DRIVER') . ':host=' . env('DB_HOST') . ';dbname=' . env('DB_DATABASE'),
                     env('DB_USERNAME'),
                     env('DB_PASSWORD')
                 );
-                self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // تعيين وضع الأخطاء
+                self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             }
         } catch (\PDOException $e) {
-            die("Connection failed: " . $e->getMessage()); // معالجة الأخطاء
+            die("Connection failed: " . $e->getMessage()); //
         }
         return self::$instance;
     }
@@ -46,7 +46,7 @@ class MySQLManager implements DatabaseManager
         }
 
         $result = $stm->execute();
-        $stm = null;  // Close statement
+        $stm = null; 
 
         return $result;
     }
@@ -56,7 +56,7 @@ class MySQLManager implements DatabaseManager
         if (self::$instance === null) {
             self::$instance = $this->connect();
         }
-
+        
         $stm = self::$instance->prepare($query);
 
         foreach ($values as $i => $value) {
@@ -65,8 +65,7 @@ class MySQLManager implements DatabaseManager
 
         $stm->execute();
         $result = $stm->fetchAll(\PDO::FETCH_ASSOC);
-        $stm = null;  // Close statement
-
+        $stm = null;
         return $result;
     }
 
@@ -74,8 +73,8 @@ class MySQLManager implements DatabaseManager
     {
         if (self::$instance === null) {
             self::$instance = $this->connect();
-        }
-
+          }
+        
         $query = MySQLGrammar::buildSelectQuery($columns, $filter);
         $stm = self::$instance->prepare($query);
 
@@ -159,8 +158,7 @@ class MySQLManager implements DatabaseManager
 
         $stm->execute();
         $result = $stm->fetchColumn();
-        $stm = null;  // Close statement
-
+        $stm = null;
         return $result;
     }
 }

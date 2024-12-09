@@ -20,7 +20,7 @@ class Route
     protected static array $routes = [];
 
     /**
-     * تسجيل الطرق GET.
+     *  @param  Register GET.
      */
     public static function get(string $path, $action): void
     {
@@ -28,7 +28,7 @@ class Route
     }
 
     /**
-     * تسجيل الطرق POST.
+     *@param  Register POST.
      */
     public static function post(string $path, $action): void
     {
@@ -36,7 +36,7 @@ class Route
     }
 
     /**
-     * تسجيل الطرق PUT.
+     * @param Register PUT.
      */
     public static function put(string $path, $action): void
     {
@@ -44,7 +44,7 @@ class Route
     }
 
     /**
-     * تسجيل الطرق DELETE.
+     *@param Register DELETE.
      */
     public static function delete(string $path, $action): void
     {
@@ -52,18 +52,15 @@ class Route
     }
 
     /**
-     * تحديد الطريق وتنفيذ الـ action المناسب.
+     * @param Select action Method .
      */
     public function resolve()
     {
         $path = $this->request->path();
         $method = $this->request->method();
-
-        // تحقق إذا كانت الطريق موجودة لطريقة الـ HTTP المعينة
         if (array_key_exists($method, self::$routes) && array_key_exists($path, self::$routes[$method])) {
             $action = self::$routes[$method][$path];
-
-            // التعامل مع الـ action بناءً على نوعه (سلسلة نصية، دالة، مصفوفة)
+            
             if (is_string($action)) {
                 return $this->callActionString($action);
             }
@@ -76,19 +73,14 @@ class Route
                 return $this->callActionArray($action);
             }
         } else {
-            // إذا لم يتم العثور على الطريق، تعيين كود الحالة 404 وعرض صفحة _404
             $this->response->setStatusCode(404);
             View::makeError('_404');
             return $this->response;
         }
     }
-
-    /**
-     * استدعاء الـ action عندما يكون سلسلة نصية.
-     */
+    
     private function callActionString(string $action)
     {
-        // هنا يمكن أن يكون الـ action هو اسم دالة أو اسم ميثود في كلاس
         return call_user_func_array($action, []);
     }
 

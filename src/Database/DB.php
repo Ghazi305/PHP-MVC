@@ -52,7 +52,6 @@ class DB
     if (is_array($results) && count($results) > 0) {
         return $results;
     }
-
       return [];
   }
 
@@ -82,7 +81,7 @@ class DB
   {
     return $this->manager->with($relations, $columns, $filter);
   }
-  
+   
   public function __call($name, $arguments)
   {
     if(method_exists($this, $name)) {

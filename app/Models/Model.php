@@ -35,20 +35,14 @@ abstract class Model
     public static function where($filter, $columns = '*')
     {
         self::$instance = static::class;
-
-        // إذا كان الفلتر عبارة عن مصفوفة من الشروط
         if (is_array($filter)) {
             $results = app()->db->read($columns, $filter);
-
-            // تحقق مما إذا كانت النتائج مصفوفة غير فارغة
             if (is_array($results) && count($results) > 0) {
-                return $results[0]; // إرجاع أول نتيجة في المصفوفة
+                return $results[0];
             }
-
             return null;
         }
-
-        // إذا كان الفلتر مجرد شرط واحد
+        
         $results = app()->db->read($columns, [$filter]);
 
         if (is_array($results) && count($results) > 0) {

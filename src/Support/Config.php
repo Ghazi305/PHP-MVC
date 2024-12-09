@@ -20,8 +20,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * التحقق مما إذا كانت الإعدادات تحتوي على المفتاح أو المفاتيح المحددة.
-     *
      * @param mixed $keys
      * @return bool
      */
@@ -39,8 +37,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * الحصول على قيمة الإعداد بناءً على المفتاح.
-     *
      * @param string|array $key
      * @param mixed $default
      * @return mixed
@@ -55,8 +51,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * الحصول على قيم متعددة للإعدادات.
-     *
      * @param array $keys
      * @return array
      */
@@ -75,7 +69,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * تعيين قيمة للإعدادات.
      *
      * @param string|array $key
      * @param mixed $value
@@ -90,8 +83,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * إضافة قيمة إلى المصفوفة الخاصة بالمفتاح.
-     *
      * @param string $key
      * @param mixed $value
      */
@@ -107,7 +98,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * إرجاع جميع الإعدادات المخزنة.
      *
      * @return array
      */
@@ -117,8 +107,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * التحقق مما إذا كان المفتاح موجودًا في الإعدادات.
-     *
      * @param string $key
      * @return bool
      */
@@ -128,8 +116,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * الدالة الخاصة بالواجهة ArrayAccess للتحقق من وجود المفتاح.
-     *
      * @param mixed $offset
      * @return bool
      */
@@ -139,8 +125,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * الدالة الخاصة بالواجهة ArrayAccess للحصول على قيمة المفتاح.
-     *
      * @param mixed $offset
      * @return mixed
      */
@@ -150,8 +134,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * الدالة الخاصة بالواجهة ArrayAccess لتعيين قيمة المفتاح.
-     *
      * @param mixed $offset
      * @param mixed $value
      */
@@ -161,8 +143,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * الدالة الخاصة بالواجهة ArrayAccess لإلغاء تعيين قيمة المفتاح.
-     *
      * @param mixed $offset
      */
     public function offsetUnset($offset): void

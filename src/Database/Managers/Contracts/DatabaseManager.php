@@ -6,7 +6,7 @@ interface DatabaseManager
 {
     public function connect(): \PDO;
     
-    public function disconnect(): void;
+    public function disconnect():void;
     
     public function query(string $query, $values = []);
     
