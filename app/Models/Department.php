@@ -11,4 +11,9 @@ class Department extends Model
     public string $created_at;
     public string $updated_at;
     public int $college_id;
+    
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'department_id', 'id');
+    }
 }

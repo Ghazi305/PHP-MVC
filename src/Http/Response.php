@@ -1,8 +1,5 @@
 <?php
-
 namespace Proton\Http;
-
-use Symfony\Component\VarDumper\VarDumper;
 
 class Response 
 {
@@ -10,7 +7,7 @@ class Response
      * تعيين كود الحالة للرد (مثل 200, 404, 500، إلخ).
      *
      * @param int $code كود الحالة
-     */
+     */ 
     public function setStatusCode(int $code): void
     {
         http_response_code($code);
@@ -25,71 +22,43 @@ class Response
     {
         if (isset($_SERVER['HTTP_REFERER'])) {
             header("Location: " . $_SERVER['HTTP_REFERER']);
-            exit; // تأكد من إنهاء السكربت بعد التوجيه
+            exit;
         }
-
-        // في حال عدم وجود HTTP_REFERER، التوجيه إلى الصفحة الرئيسية
+        
         header("Location: /");
         exit;
     }
-
+    
     /**
-     * إرسال استجابة بتنسيق JSON.
-     * 
-     * @param mixed $data البيانات التي سيتم إرسالها بتنسيق JSON
-     * @param int $statusCode كود الحالة (اختياري، الافتراضي هو 200)
-     * @return void
+     * إرسال استجابة بصيغة JSON.
      */
-    public function json($data, int $statusCode = 200): void
+    public function json($data, $statusCode)
     {
-        // تعيين كود الحالة
-        $this->setStatusCode($statusCode);
-
-        // تحديد نوع المحتوى
-        header('Content-Type: application/json; charset=UTF-8');
-
-        // إرسال البيانات بتنسيق JSON
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
-        exit; // تأكد من إنهاء السكربت بعد إرسال البيانات
+        header('Content-Type: application/json');
+        http_response_code($statusCode);
+        echo json_encode($data);
+        exit; // تأكد من إيقاف تنفيذ السكربت بعد إرسال الاستجابة
     }
 
     /**
-     * إرسال استجابة بتنسيق نصي.
-     * 
-     * @param string $text النص الذي سيتم إرساله
-     * @param int $statusCode كود الحالة (اختياري، الافتراضي هو 200)
-     * @return void
+     * إرسال استجابة بصيغة نصية.
      */
-    public function text(string $text, int $statusCode = 200): void
+    public function text($data, $statusCode)
     {
-        // تعيين كود الحالة
-        $this->setStatusCode($statusCode);
-
-        // تحديد نوع المحتوى
-        header('Content-Type: text/plain; charset=UTF-8');
-
-        // إرسال النص
-        echo $text;
-        exit; // تأكد من إنهاء السكربت بعد إرسال البيانات
+        header('Content-Type: text/plain');
+        http_response_code($statusCode);
+        echo $data;
+        exit; // تأكد من إيقاف تنفيذ السكربت بعد إرسال الاستجابة
     }
 
     /**
-     * إرسال استجابة بتنسيق HTML.
-     * 
-     * @param string $html المحتوى HTML الذي سيتم إرساله
-     * @param int $statusCode كود الحالة (اختياري، الافتراضي هو 200)
-     * @return void
+     * إرسال استجابة بصيغة HTML.
      */
-    public function html(string $html, int $statusCode = 200): void
+    public function html($data, $statusCode)
     {
-        // تعيين كود الحالة
-        $this->setStatusCode($statusCode);
-
-        // تحديد نوع المحتوى
-        header('Content-Type: text/html; charset=UTF-8');
-
-        // إرسال HTML
-        echo $html;
-        exit; // تأكد من إنهاء السكربت بعد إرسال البيانات
+        header('Content-Type: text/html');
+        http_response_code($statusCode);
+        echo $data;
+        exit; // تأكد من إيقاف تنفيذ السكربت بعد إرسال الاستجابة
     }
-}
+} 

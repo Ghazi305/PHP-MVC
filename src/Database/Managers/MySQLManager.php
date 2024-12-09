@@ -12,21 +12,25 @@ class MySQLManager implements DatabaseManager
 
     public function connect(): \PDO
     {
-        if (!self::$instance) {
-            self::$instance = new \PDO(
-                env('DB_DRIVER') . ':host=' . env('DB_HOST') . ';dbname=' . env('DB_DATABASE'),
-                env('DB_USERNAME'),
-                env('DB_PASSWORD')
-            );
+        try {
+            if (!self::$instance) {
+                self::$instance = new \PDO(
+                    env('DB_DRIVER') . ':host=' . env('DB_HOST') . ';dbname=' . env('DB_DATABASE'),
+                    env('DB_USERNAME'),
+                    env('DB_PASSWORD')
+                );
+                self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // تعيين وضع الأخطاء
+            }
+        } catch (\PDOException $e) {
+            die("Connection failed: " . $e->getMessage()); // معالجة الأخطاء
         }
-
         return self::$instance;
     }
 
     public function disconnect(): void
     {
         self::$instance = null;
-    } 
+    }
 
     public function create($data)
     {
@@ -43,6 +47,7 @@ class MySQLManager implements DatabaseManager
 
         $result = $stm->execute();
         $stm = null;  // Close statement
+
         return $result;
     }
 
@@ -70,11 +75,11 @@ class MySQLManager implements DatabaseManager
         if (self::$instance === null) {
             self::$instance = $this->connect();
         }
-        
+
         $query = MySQLGrammar::buildSelectQuery($columns, $filter);
         $stm = self::$instance->prepare($query);
 
-        if ($filter) {
+        if ($filter && isset($filter[2])) {
             $stm->bindValue(1, $filter[2]);
         }
 
@@ -148,13 +153,13 @@ class MySQLManager implements DatabaseManager
         $query = MySQLGrammar::buildCountQuery($columns);
         $stm = self::$instance->prepare($query);
 
-        if ($filter) {
+        if ($filter && isset($filter[2])) {
             $stm->bindValue(1, $filter[2]);
         }
 
         $stm->execute();
         $result = $stm->fetchColumn();
-        $stm = null; 
+        $stm = null;  // Close statement
 
         return $result;
     }

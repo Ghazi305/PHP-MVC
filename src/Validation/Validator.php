@@ -19,12 +19,14 @@ class Validator
    * Initialize the validator with the provided data.
    * 
    * @param array $data The data to be validated.
-   */
-  public function make($data)
+   */ 
+  public static function make($data) // دالة ثابتة
   {
-    $this->data = $data;
-    $this->errorBag = new ErrorBag();
-    $this->validate();
+    $instance = new self(); // إنشاء كائن جديد
+    $instance->data = $data;
+    $instance->errorBag = new ErrorBag();
+    $instance->validate();
+    return $instance;
   }
 
   /**

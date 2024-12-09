@@ -5,7 +5,6 @@ namespace Proton\Database;
 use Proton\Database\Managers\Contracts\DatabaseManager;
 use Proton\Database\Connects\ConnectsTo;
 
-
 class DB 
 {
   protected DatabaseManager $manager;
@@ -25,7 +24,7 @@ class DB
     return $this->manager->query($query, $value);
   }
   
-  protected function create(array $data)
+  protected function create(string $table, array $data = [])
   {
     return $this->manager->create($data);
   }
@@ -34,6 +33,30 @@ class DB
   {
     return $this->manager->read($columns, $filter);
   }
+  
+  public function first($columns = '*', $filter = null)
+  {
+    $results = $this->manager->read($columns, $filter);
+
+    if (is_array($results) && count($results) > 0) {
+        return $results[0];
+    }
+
+    return null;
+  }
+  
+  public function get($columns = '*', $filter = null)
+  {
+    $results = $this->manager->read($columns, $filter);
+
+    if (is_array($results) && count($results) > 0) {
+        return $results;
+    }
+
+      return [];
+  }
+
+
   
   protected function update($id, $data)
   {
@@ -64,6 +87,10 @@ class DB
   {
     if(method_exists($this, $name)) {
       return call_user_func_array([$this, $name], $arguments);
+    }
+    
+    if(method_exists($this->manager, $name)) {
+      return call_user_func_array([$this->manager, $name], $arguments);
     }
   }
 }

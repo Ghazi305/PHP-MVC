@@ -51,6 +51,23 @@ if (!function_exists('request')) {
   }
 }
 
+if (!function_exists('response')) {
+  function response($data = null, int $statusCode = 200, string $type = 'json') { 
+    $response = new Response();
+    
+    switch ($type) {
+      case 'json':
+        return $response->json($data, $statusCode);
+      case 'text':
+        return $response->text($data, $statusCode);
+      case 'html':
+        return $response->html($data, $statusCode);
+      default :
+        return $response->json($data, $statusCode); 
+    }
+  }
+}
+
 if (!function_exists('back')) {
   function back() {
     return (new Response())->back();

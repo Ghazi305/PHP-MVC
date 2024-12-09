@@ -16,7 +16,13 @@
             <?php if (!empty($department) && is_array($department)): ?>
                 <p>
                     <?php foreach ($department as $departments): ?>
-                        <?= htmlspecialchars($departments->department_name, ENT_QUOTES, 'UTF-8') ?><br>
+                        <?=  htmlspecialchars($departments->id, ENT_QUOTES, 'UTF-8') ?><br>
+                        <?=  htmlspecialchars($departments->name, ENT_QUOTES, 'UTF-8') ?><br>
+                        <?=  htmlspecialchars($departments->age, ENT_QUOTES, 'UTF-8') ?><br>
+                        <?=  htmlspecialchars($departments->email, ENT_QUOTES, 'UTF-8') ?><br>
+                        <?=  htmlspecialchars($departments->phone, ENT_QUOTES, 'UTF-8') ?><br>
+                        <?=  htmlspecialchars($departments->national_id, ENT_QUOTES, 'UTF-8') ?><br>
+                        <?=  htmlspecialchars($departments->university_id, ENT_QUOTES, 'UTF-8') ?><br>
                     <?php endforeach; ?>
                 </p>
             <?php else: ?>

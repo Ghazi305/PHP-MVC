@@ -1,10 +1,9 @@
 <?php
-
 namespace Proton\Validation\Rules;
 
 use Proton\Validation\Rules\Contract\Rule;
 
-class RequierdRule implements Rule
+class RequiredRule implements Rule
 {
   public function apply($field, $value, $data = [])
   {
@@ -13,6 +12,6 @@ class RequierdRule implements Rule
   
   public function __toString()
   {
-    return '%s is requier and canoot be empty';
+    return '%s is required and cannot be empty';
   }
 }
